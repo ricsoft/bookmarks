@@ -9,9 +9,22 @@ export async function sendData(data) {
 
   if (!response.ok) {
     alert(`${data.method} Error`);
+  }
+
+  return;
+}
+
+export async function fetchLinks() {
+  const response = await fetch(import.meta.env.VITE_API_SERVER, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) {
+    alert("GET Error");
     return;
   }
 
   const responseBody = await response.json();
-  console.log("responseBody", responseBody);
+  return responseBody;
 }

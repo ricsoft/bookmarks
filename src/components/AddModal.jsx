@@ -1,19 +1,25 @@
 import { useRef } from "react";
 import { sendData } from "../utils/api";
-import { methods } from "../utils/constants"
+import { methods } from "../utils/constants";
 
 export default function AddModal(props) {
   const nameRef = useRef(null);
   const linkRef = useRef(null);
 
-  function add() {
+  async function add() {
     if (!nameRef.current.value) {
       alert("Name Required");
       return;
     }
 
-    sendData({name: nameRef.current.value, link: linkRef.current.value, method: methods.create});
-    props.close()
+    await sendData({
+      name: nameRef.current.value,
+      link: linkRef.current.value,
+      method: methods.create,
+    });
+
+    await props.update();
+    props.close();
   }
 
   return (
