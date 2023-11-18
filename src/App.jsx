@@ -33,6 +33,11 @@ function App() {
     }
   }
 
+  function scrollToFolder() {
+    const folder = document.getElementById("folder");
+    if (folder) folder.scrollIntoView({ behavior: "smooth" });
+  }
+
   function toggleModal(action = actions.close, args = {}) {
     if (action === actions.close) {
       if (folder && args?.folderId && folder.id === args.folderId) {
@@ -68,23 +73,29 @@ function App() {
 
   return (
     <>
-      <div className="App container is-flex is-justify-content-center">
+      <div className="App container is-flex is-flex-wrap-wrap is-justify-content-center">
         <BookmarkTable
           toggleModal={toggleModal}
           links={links}
-          folderClicked={(args) => fetchFolder(args)}
+          folderClicked={async (args) => {
+            await fetchFolder(args);
+            scrollToFolder();
+          }}
         />
         {!folder ? (
           <></>
         ) : (
-          <BookmarkTable
-            isFolder
-            toggleModal={toggleModal}
-            close={() => setFolder(null)}
-            links={folder.data}
-            name={folder.name}
-            id={folder.id}
-          />
+          <>
+            <div id="folder" />
+            <BookmarkTable
+              isFolder
+              toggleModal={toggleModal}
+              close={() => setFolder(null)}
+              links={folder.data}
+              name={folder.name}
+              id={folder.id}
+            />
+          </>
         )}
       </div>
       <div className={`modal ${modalActive}`}>

@@ -17,7 +17,7 @@ export default function BookmarkTable(props) {
 
   return (
     <div
-      className="mx-3 has-background-white"
+      className="m-3 has-background-white"
       style={{ width: "100%", maxWidth: "475px" }}
     >
       <table className="table is-fullwidth is-striped">
