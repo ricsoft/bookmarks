@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import BookmarkTable from "./components/BookmarkTable";
 import AddModal from "./components/AddModal";
 import DeleteModal from "./components/DeleteModal";
+import EditModal from "./components/EditModal";
 import { actions, modalState } from "./utils/constants";
 import { fetchLinks } from "./utils/api";
 
@@ -51,7 +52,7 @@ function App() {
         setModalContent(
           <AddModal
             args={args}
-            close={() => toggleModal(actions.close)}
+            close={toggleModal}
             updateLinks={async () => await updateLinks()}
             updateFolder={async (args) => await fetchFolder(args)}
           />
@@ -61,6 +62,15 @@ function App() {
           <DeleteModal
             args={args}
             close={(args) => toggleModal(actions.close, args)}
+            updateLinks={async () => await updateLinks()}
+            updateFolder={async (args) => await fetchFolder(args)}
+          />
+        );
+      } else if (action === actions.edit) {
+        setModalContent(
+          <EditModal
+            args={args}
+            close={toggleModal}
             updateLinks={async () => await updateLinks()}
             updateFolder={async (args) => await fetchFolder(args)}
           />
@@ -104,7 +114,7 @@ function App() {
         <button
           className="modal-close is-large is-light"
           aria-label="close"
-          onClick={() => toggleModal(actions.close)}
+          onClick={() => toggleModal()}
         />
       </div>
     </>

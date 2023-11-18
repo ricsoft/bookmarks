@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { sendData } from "../utils/api";
-import { methods } from "../utils/constants";
+import { actions } from "../utils/constants";
 
 export default function AddModal(props) {
   const nameRef = useRef(null);
@@ -23,7 +23,7 @@ export default function AddModal(props) {
     await sendData({
       name: nameRef.current.value,
       link: linkRef.current.value,
-      method: methods.create,
+      action: actions.create,
       folderId: props?.args.folderId || "",
     });
 

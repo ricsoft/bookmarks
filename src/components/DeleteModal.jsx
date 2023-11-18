@@ -1,11 +1,11 @@
 import { sendData } from "../utils/api";
-import { methods } from "../utils/constants";
+import { actions } from "../utils/constants";
 
 export default function DeleteModal(props) {
   async function del() {
     const data = {
       uid: props.args.link.uid,
-      method: methods.delete,
+      action: actions.delete,
     };
     if (props?.args?.fromFolder) {
       data.fromFolder = props.args.fromFolder;

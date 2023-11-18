@@ -15,15 +15,21 @@ export default function BookmarkTable(props) {
     }
   }
 
+  function handleEdit(link, index) {
+    let args = { ...link, index: index, maxLength: props.links.length };
+    if (props?.isFolder) args.fromFolder = props.id;
+    props.toggleModal(actions.edit, args);
+  }
+
   return (
     <div
-      className="m-3 has-background-white"
+      className="m-3 has-background-white is-align-self-flex-start"
       style={{ width: "100%", maxWidth: "475px" }}
     >
       <table className="table is-fullwidth is-striped">
         <tbody>
           <tr>
-            <td className="is-flex is-justify-content-space-between">
+            <td className="is-flex is-justify-content-space-between is-align-items-center">
               {props.isFolder ? (
                 <button
                   className="button is-danger is-small is-light"
@@ -55,7 +61,7 @@ export default function BookmarkTable(props) {
           {props.links &&
             props.links.map((link, index) => (
               <tr key={index}>
-                <td className="is-flex is-justify-content-space-between">
+                <td className="is-flex is-justify-content-space-between is-align-items-center">
                   <div className="is-flex is-align-items-baseline">
                     <p className="mr-3 is-size-7" style={{ opacity: "0.65" }}>
                       {index + 1}.
@@ -81,7 +87,7 @@ export default function BookmarkTable(props) {
                   <div>
                     <button
                       className="mr-2 button is-warning is-small is-light"
-                      onClick={() => props.toggleModal(actions.edit)}
+                      onClick={() => handleEdit(link, index)}
                     >
                       Edit
                     </button>
