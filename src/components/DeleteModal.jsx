@@ -3,13 +3,25 @@ import { methods } from "../utils/constants";
 
 export default function DeleteModal(props) {
   async function del() {
-    await sendData({
-      uid: props.args.uid,
+    const data = {
+      uid: props.args.link.uid,
       method: methods.delete,
-    });
+    };
+    if (props?.args?.fromFolder) {
+      data.fromFolder = props.args.fromFolder;
+      await sendData(data);
+      await props.updateFolder({ id: props.args.fromFolder });
+    } else {
+      await sendData(data);
+      await props.updateLinks();
+    }
 
-    await props.update();
-    props.close();
+    let args = {};
+    if (props?.args?.link?.isFolder) {
+      args.folderId = props.args.link.link;
+    }
+
+    props.close(args);
   }
 
   return (
@@ -17,12 +29,15 @@ export default function DeleteModal(props) {
       <p className="my-5">Delete {props.args.name}</p>
       <div className="is-flex is-justify-content-flex-end">
         <button
-          className="button is-danger is-small"
+          className="button is-danger is-small is-light"
           onClick={() => props.close()}
         >
           Cancel
         </button>
-        <button className="ml-3 button is-success is-small" onClick={del}>
+        <button
+          className="ml-3 button is-success is-small is-light"
+          onClick={del}
+        >
           Ok
         </button>
       </div>

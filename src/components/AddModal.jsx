@@ -7,6 +7,14 @@ export default function AddModal(props) {
   const linkRef = useRef(null);
 
   async function add() {
+    if (
+      props?.args?.folderId &&
+      (!nameRef.current.value || !linkRef.current.value)
+    ) {
+      alert("Name and Link Required");
+      return;
+    }
+
     if (!nameRef.current.value) {
       alert("Name Required");
       return;
@@ -16,9 +24,15 @@ export default function AddModal(props) {
       name: nameRef.current.value,
       link: linkRef.current.value,
       method: methods.create,
+      folderId: props?.args.folderId || "",
     });
 
-    await props.update();
+    if (props?.args?.folderId) {
+      await props.updateFolder({ id: props.args.folderId });
+    } else {
+      await props.updateLinks();
+    }
+
     props.close();
   }
 
@@ -34,12 +48,15 @@ export default function AddModal(props) {
 
       <div className="is-flex is-justify-content-flex-end">
         <button
-          className="button is-danger is-small"
+          className="button is-danger is-small is-light"
           onClick={() => props.close()}
         >
           Cancel
         </button>
-        <button className="ml-3 button is-success is-small" onClick={add}>
+        <button
+          className="ml-3 button is-success is-small is-light"
+          onClick={add}
+        >
           Ok
         </button>
       </div>
