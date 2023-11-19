@@ -5,6 +5,7 @@ export const actions = {
   create: "create",
   edit: "edit",
   delete: "delete",
+  restore: "restore",
 };
 
 export const modalState = {

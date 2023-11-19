@@ -3,6 +3,7 @@ import BookmarkTable from "./components/BookmarkTable";
 import AddModal from "./components/AddModal";
 import DeleteModal from "./components/DeleteModal";
 import EditModal from "./components/EditModal";
+import BackupModal from "./components/BackupModal";
 import { actions, modalState } from "./utils/constants";
 import { fetchLinks } from "./utils/api";
 
@@ -75,8 +76,14 @@ function App() {
             updateFolder={async (args) => await fetchFolder(args)}
           />
         );
+      } else if (action === actions.backup) {
+        setModalContent(
+          <BackupModal
+            close={toggleModal}
+            updateLinks={async () => await updateLinks()}
+          />
+        );
       }
-
       setModalActive(modalState.active);
     }
   }

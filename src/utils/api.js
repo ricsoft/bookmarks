@@ -12,17 +12,14 @@ export async function sendData(data) {
   return;
 }
 
-export async function fetchLinks(folderId = "") {
-  const response = await fetch(
-    `${import.meta.env.VITE_API_SERVER}${folderId}`,
-    {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    }
-  );
+export async function fetchLinks(param = "") {
+  const response = await fetch(`${import.meta.env.VITE_API_SERVER}${param}`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
 
   if (!response.ok) {
-    alert("GET Error");
+    alert(`GET ${param + " "}Error`);
     return;
   }
 
