@@ -47,7 +47,8 @@ function App() {
 
   function scrollToFolder() {
     const folder = document.getElementById("folder");
-    if (folder) folder.scrollIntoView({ behavior: "smooth" });
+    if (folder && window.screen.width < 1000)
+      folder.scrollIntoView({ behavior: "smooth" });
   }
 
   function toggleModal(action = actions.close, args = {}) {
