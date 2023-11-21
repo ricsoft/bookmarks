@@ -71,6 +71,7 @@ function App() {
             close={toggleModal}
             updateLinks={async () => await updateLinks()}
             updateFolder={async (args) => await fetchFolder(args)}
+            openedFolder={folder}
           />
         );
       } else if (action === actions.backup) {

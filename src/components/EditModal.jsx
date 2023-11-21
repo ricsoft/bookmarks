@@ -36,7 +36,13 @@ export default function EditModal(props) {
     await sendData(data);
 
     if (fromFolder) {
-      await props.updateFolder({ id: fromFolder });
+      await props.updateFolder({
+        id: fromFolder,
+        name: props.openedFolder.name,
+      });
+    } else if (props?.openedFolder?.id === props.args.link) {
+      await props.updateFolder({ id: props.args.link, name: data.name });
+      await props.updateLinks();
     } else {
       await props.updateLinks();
     }
