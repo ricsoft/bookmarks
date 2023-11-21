@@ -6,6 +6,7 @@ import EditModal from "./components/EditModal";
 import BackupModal from "./components/BackupModal";
 import { actions, modalState } from "./utils/constants";
 import { fetchLinks } from "./utils/api";
+import { handlePin, scrollToFolder } from "./utils/utils";
 
 function App() {
   const [links, setLinks] = useState(null);
@@ -17,15 +18,6 @@ function App() {
     handlePin();
     updateLinks();
   }, []);
-
-  function handlePin() {
-    let pin = localStorage.getItem("pin");
-
-    if (!pin) {
-      pin = window.prompt("PIN");
-      if (pin) localStorage.setItem("pin", pin);
-    }
-  }
 
   async function updateLinks() {
     const data = await fetchLinks();
@@ -43,12 +35,6 @@ function App() {
         setFolder({ id: args.id, name: args.name, data: data });
       else setFolder({ id: args.id, name: args.name, data: [] });
     }
-  }
-
-  function scrollToFolder() {
-    const folder = document.getElementById("folder");
-    if (folder && window.screen.width < 1000)
-      folder.scrollIntoView({ behavior: "smooth" });
   }
 
   function toggleModal(action = actions.close, args = {}) {
