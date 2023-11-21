@@ -14,8 +14,18 @@ function App() {
   const [modalContent, setModalContent] = useState(null);
 
   useEffect(() => {
+    handlePin();
     updateLinks();
   }, []);
+
+  function handlePin() {
+    let pin = localStorage.getItem("pin");
+
+    if (!pin) {
+      pin = window.prompt("PIN");
+      if (pin) localStorage.setItem("pin", pin);
+    }
+  }
 
   async function updateLinks() {
     const data = await fetchLinks();
