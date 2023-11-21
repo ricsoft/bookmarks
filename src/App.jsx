@@ -106,23 +106,20 @@ function App() {
           links={links}
           folderClicked={async (args) => {
             await fetchFolder(args);
-            scrollToFolder();
+            setTimeout(scrollToFolder, 0);
           }}
         />
         {!folder ? (
           <></>
         ) : (
-          <>
-            <div id="folder" />
-            <BookmarkTable
-              isFolder
-              toggleModal={toggleModal}
-              close={() => setFolder(null)}
-              links={folder.data}
-              name={folder.name}
-              id={folder.id}
-            />
-          </>
+          <BookmarkTable
+            isFolder
+            toggleModal={toggleModal}
+            close={() => setFolder(null)}
+            links={folder.data}
+            name={folder.name}
+            id={folder.id}
+          />
         )}
       </div>
       <div className={`modal ${modalActive}`}>

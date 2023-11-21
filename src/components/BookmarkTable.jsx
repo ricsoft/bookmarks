@@ -26,6 +26,7 @@ export default function BookmarkTable(props) {
       className="m-3 has-background-white is-align-self-flex-start"
       style={{ width: "100%", maxWidth: "475px" }}
     >
+      {props.isFolder ? <div id="folder" /> : <></>}
       <table className="table is-fullwidth is-striped">
         <tbody>
           <tr>
@@ -63,7 +64,10 @@ export default function BookmarkTable(props) {
               <tr key={index}>
                 <td className="is-flex is-justify-content-space-between is-align-items-center">
                   <div className="is-flex is-align-items-baseline">
-                    <p className="mr-3 is-size-7" style={{ opacity: "0.65" }}>
+                    <p
+                      className="mr-3 is-size-7"
+                      style={{ width: "10px", opacity: "0.65" }}
+                    >
                       {index + 1}.
                     </p>
                     {link.isFolder ? (
@@ -80,11 +84,11 @@ export default function BookmarkTable(props) {
                       </p>
                     ) : (
                       <a href={link.link} target="_blank" rel="noreferrer">
-                        {link.name}
+                        <p>{link.name}</p>
                       </a>
                     )}
                   </div>
-                  <div>
+                  <div className="is-flex">
                     <button
                       className="mr-2 button is-warning is-small is-light"
                       onClick={() => handleEdit(link, index)}
