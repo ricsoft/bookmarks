@@ -26,7 +26,7 @@ export default function DeleteModal(props) {
 
   return (
     <div className="box" style={{ margin: "auto", maxWidth: "300px" }}>
-      <p className="my-5">Delete {props.args.name}</p>
+      <p className="my-5">Delete {props.args.link.name}</p>
       <div className="is-flex is-justify-content-flex-end">
         <button
           className="button is-danger is-small is-light"

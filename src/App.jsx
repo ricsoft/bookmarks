@@ -1,18 +1,14 @@
 import { useState, useEffect } from "react";
 import BookmarkTable from "./components/BookmarkTable";
-import AddModal from "./components/AddModal";
-import DeleteModal from "./components/DeleteModal";
-import EditModal from "./components/EditModal";
-import BackupModal from "./components/BackupModal";
-import { actions, modalState } from "./utils/constants";
+import Modal from "./components/Modal";
+import { actions } from "./utils/constants";
 import { fetchLinks } from "./utils/api";
 import { handlePin, scrollToFolder } from "./utils/utils";
 
 function App() {
   const [links, setLinks] = useState(null);
   const [folder, setFolder] = useState(null);
-  const [modalActive, setModalActive] = useState(modalState.inactive);
-  const [modalContent, setModalContent] = useState(null);
+  const [modalActive, setModalActive] = useState(null);
 
   useEffect(() => {
     handlePin();
@@ -43,46 +39,9 @@ function App() {
         setFolder(null);
       }
 
-      setModalActive(modalState.inactive);
-      setModalContent(null);
+      setModalActive(null);
     } else {
-      if (action === actions.add) {
-        setModalContent(
-          <AddModal
-            args={args}
-            close={toggleModal}
-            updateLinks={async () => await updateLinks()}
-            updateFolder={async (args) => await fetchFolder(args)}
-          />
-        );
-      } else if (action === actions.delete) {
-        setModalContent(
-          <DeleteModal
-            args={args}
-            close={(args) => toggleModal(actions.close, args)}
-            updateLinks={async () => await updateLinks()}
-            updateFolder={async (args) => await fetchFolder(args)}
-          />
-        );
-      } else if (action === actions.edit) {
-        setModalContent(
-          <EditModal
-            args={args}
-            close={toggleModal}
-            updateLinks={async () => await updateLinks()}
-            updateFolder={async (args) => await fetchFolder(args)}
-            openedFolder={folder}
-          />
-        );
-      } else if (action === actions.backup) {
-        setModalContent(
-          <BackupModal
-            close={toggleModal}
-            updateLinks={async () => await updateLinks()}
-          />
-        );
-      }
-      setModalActive(modalState.active);
+      setModalActive({ action: action, args: args });
     }
   }
 
@@ -110,15 +69,13 @@ function App() {
           />
         )}
       </div>
-      <div className={`modal ${modalActive}`}>
-        <div className="modal-background"></div>
-        <div className="modal-content">{modalContent}</div>
-        <button
-          className="modal-close is-large is-light"
-          aria-label="close"
-          onClick={() => toggleModal()}
-        />
-      </div>
+      <Modal
+        folder={folder}
+        modalActive={modalActive}
+        toggleModal={(args) => toggleModal(args)}
+        updateLinks={updateLinks}
+        fetchFolder={(args) => fetchFolder(args)}
+      />
     </>
   );
 }

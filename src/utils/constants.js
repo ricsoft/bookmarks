@@ -7,8 +7,3 @@ export const actions = {
   delete: "delete",
   restore: "restore",
 };
-
-export const modalState = {
-  active: "is-active",
-  inactive: "",
-};
