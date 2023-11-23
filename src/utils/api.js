@@ -1,12 +1,14 @@
-const headers = {
-  "Content-Type": "application/json",
-  Authorization: localStorage.getItem("pin") || "",
-};
+const url = JSON.parse(import.meta.env.VITE_DEV)
+  ? `http://localhost:8080${import.meta.env.VITE_API_SERVER}`
+  : import.meta.env.VITE_API_SERVER;
 
 export async function sendData(data) {
-  const response = await fetch(import.meta.env.VITE_API_SERVER, {
+  const response = await fetch(url, {
     method: "POST",
-    headers: headers,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("pin"),
+    },
     body: JSON.stringify(data),
   });
 
@@ -18,9 +20,12 @@ export async function sendData(data) {
 }
 
 export async function fetchLinks(param = "") {
-  const response = await fetch(`${import.meta.env.VITE_API_SERVER}${param}`, {
+  const response = await fetch(`${url}${param}`, {
     method: "GET",
-    headers: headers,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("pin"),
+    },
   });
 
   if (!response.ok) {
